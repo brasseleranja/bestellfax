@@ -6,35 +6,26 @@
   <script>
     window.onload = function () {
       const params = new URLSearchParams(window.location.search);
-      const accountid = params.get("accountid");
-      const name = params.get("name");
-      const date = new Date().toISOString().split("T")[0];
+      const accountnumber = params.get("accountnumber");
+      const salesrep = params.get("salesrep");
 
-      if (!accountid || !name) {
-        document.body.innerHTML = "❗ Fehlende Parameter: accountid oder name.";
+      if (!accountnumber || !salesrep) {
+        document.body.innerHTML = "❗ Fehlende Parameter: accountnumber oder salesrep.";
         return;
       }
 
-      const encodedName = encodeURIComponent(name)
-        .replace(/%/g, "%25")
-        .replace(/ /g, "%2520");
+      // Beispiel-Link für künftige Logik – hier kann je nach Zielsystem angepasst werden
+      const zielUrl = "https://wakometxrmapi.azurewebsites.net/api/v1/Bestellfax/" +
+                      encodeURIComponent(salesrep) + "/" +
+                      encodeURIComponent(accountnumber) +
+                      "/base64?yearsback=4";
 
-      const crmLink =
-        "https://kometdentallive.crm4.dynamics.com/main.aspx?" +
-        "appid=a6b81ae2-3996-4adb-a0fb-2e15750512de" +
-        "&pagetype=entityrecord" +
-        "&etn=bras_besuchsbericht" +
-        "&extraqs=" +
-        "regardingobjectid%3D%7B" + accountid + "%7D" +
-        "%26regardingobjectidname%3D" + encodedName +
-        "%26regardingobjectidtype%3Daccount" +
-        "%26bras_besuchsdatum%3D" + date;
-
-      window.location.href = crmLink;
+      // Für Testzwecke Weiterleitung anzeigen
+      window.location.href = zielUrl;
     };
   </script>
 </head>
 <body>
-  <p>📄 Bitte warten – das Bestellfax wird geöffnet ...</p>
+  <p>📄 Bitte warten – das Bestellfax wird geladen ...</p>
 </body>
 </html>
